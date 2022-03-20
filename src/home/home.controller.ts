@@ -1,4 +1,3 @@
-import { AuthGuard } from './../guards/auth.guard';
 import { UserTokenInfo } from './../user/decorators/user.decorator';
 import {
   CreateHomeResponseDto,
@@ -53,7 +52,7 @@ export class HomeController {
   }
 
   @Get(':id')
-  getOneHome(@Param('id') id: string): Promise<HomeResponseDto> {
+  getOneHome(@Param('id', ParseIntPipe) id: number): Promise<HomeResponseDto> {
     return this.homeService.getOneHomeById(id);
   }
 

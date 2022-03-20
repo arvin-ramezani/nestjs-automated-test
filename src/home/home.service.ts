@@ -64,6 +64,10 @@ export class HomeService {
       where: filter,
     });
 
+    if (!homes.length) {
+      throw new NotFoundException('No homes are found');
+    }
+
     return homes.map((home) => {
       // Just Send One Single Image
       const fetchHome = { ...home, image: home?.images[0]?.url };
@@ -75,10 +79,10 @@ export class HomeService {
     });
   }
 
-  async getOneHomeById(id: string): Promise<HomeResponseDto> {
+  async getOneHomeById(id: number): Promise<HomeResponseDto> {
     const home = await this.prismaService.home.findUnique({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
     const transformedHome = new HomeResponseDto(home);
